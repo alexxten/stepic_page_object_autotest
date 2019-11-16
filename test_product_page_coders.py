@@ -5,6 +5,7 @@ from pages.locators import BasketPageLocators
 import pytest
 
 
+@pytest.mark.skip("Параметризованный тест на книгу 'Coders at Work'")
 @pytest.mark.parametrize('link', ["http://selenium1py.pythonanywhere.com/catalogue/coders-at-work_207/?promo=offer0",
                                   "http://selenium1py.pythonanywhere.com/catalogue/coders-at-work_207/?promo=offer1",
                                   "http://selenium1py.pythonanywhere.com/catalogue/coders-at-work_207/?promo=offer2",
@@ -16,13 +17,12 @@ import pytest
                                                "catalogue/coders-at-work_207/?promo=offer7", marks=pytest.mark.xfail),
                                   "http://selenium1py.pythonanywhere.com/catalogue/coders-at-work_207/?promo=offer8",
                                   "http://selenium1py.pythonanywhere.com/catalogue/coders-at-work_207/?promo=offer9"])
-def test_guest_can_add_product_to_basket_param(browser, link):
+def test_guest_can_add_product_to_basket_coders(browser, link):
 
     page = ProductPage(browser, link)
     page.open()
 
-    product_name = page.browser.find_element(*ProductPageLocators.PRODUCT_NAME).text
-    product_price = page.browser.find_element(*ProductPageLocators.PRODUCT_PRICE).text
+    product_name, product_price = page.get_product_info()
 
     page.should_be_add_to_basket_btn()
     page.add_product_to_basket()
@@ -30,6 +30,22 @@ def test_guest_can_add_product_to_basket_param(browser, link):
 
     basket_page = BasketPage(browser, browser.current_url)
     basket_page.should_be_alerts()
+    basket_page.check_product_info(product_name, product_price)
 
-    alerts = basket_page.browser.find_elements(*BasketPageLocators.ALERTS)
-    basket_page.check_prod_name(product_name, product_price, alerts[0].text, alerts[2].text)
+
+def test_guest_can_add_product_to_basket(browser, link="http://selenium1py.pythonanywhere.com/"
+                                                       "catalogue/the-shellcoders-handbook_209/?promo=newYear"):
+
+    page = ProductPage(browser, link)
+    page.open()
+
+    product_name, product_price = page.get_product_info()
+
+    page.should_be_add_to_basket_btn()
+    page.add_product_to_basket()
+    page.solve_quiz_and_get_code()
+
+    basket_page = BasketPage(browser, browser.current_url)
+    basket_page.should_be_alerts()
+    basket_page.check_product_info(product_name, product_price)
+

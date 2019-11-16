@@ -15,5 +15,11 @@ class ProductPage(BasePage):
     def should_disappear(self):
         assert self.is_disappeared(*ProductPageLocators.SUCCESS_MESSAGE)
 
+    def get_product_info(self):
+        name = self.browser.find_element(*ProductPageLocators.PRODUCT_NAME).text
+        price = self.browser.find_element(*ProductPageLocators.PRODUCT_PRICE).text
+
+        return name, price
+
     def add_product_to_basket(self):
         self.browser.find_element(*ProductPageLocators.ADD_TO_BASKET_BTN).click()
