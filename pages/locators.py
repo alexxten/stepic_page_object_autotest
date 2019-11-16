@@ -9,7 +9,6 @@ class MainPageLocators:
 class LoginPageLocators:
     LOGIN_FORM = By.CSS_SELECTOR, "#login_form"
     REGISTER_FORM = By.CSS_SELECTOR, "#register_form"
-    pass
 
 
 class ProductPageLocators:
@@ -21,3 +20,9 @@ class ProductPageLocators:
 
 class BasketPageLocators:
     ALERTS = By.CSS_SELECTOR, ".alertinner strong"
+
+
+class BasePageLocators:
+    LOGIN_LINK = By.CSS_SELECTOR, "#login_link"
+    LOGIN_LINK_INVALID = By.CSS_SELECTOR, "#login_link_inc"
+
