@@ -13,7 +13,7 @@ class ProductPage(BasePage):
             "Success message is presented, but should not be"
 
     def should_disappear(self):
-        assert self.is_disappeared(*ProductPageLocators.SUCCESS_MESSAGE)
+        assert self.is_disappeared(*ProductPageLocators.SUCCESS_MESSAGE), "Element is presented, but should disappear"
 
     def get_product_info(self):
         name = self.browser.find_element(*ProductPageLocators.PRODUCT_NAME).text
